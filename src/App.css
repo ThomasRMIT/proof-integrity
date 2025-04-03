@@ -3,6 +3,8 @@
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  font-family: Arial, sans-serif;
+  background-color: #f9f9f9;
 }
 
 .logo {
@@ -39,4 +41,11 @@
 
 .read-the-docs {
   color: #888;
+}
+
+.landing-page {
+  background-color: white;
+  border-radius: 16px;
+  padding: 3rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
 }
