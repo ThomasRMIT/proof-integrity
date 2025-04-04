@@ -1,6 +1,6 @@
 /* LandingPage.css */
 
-/* General Reset for White Gaps */
+/* General Reset */
 body,
 html,
 #root {
@@ -29,7 +29,6 @@ html,
     overflow: hidden;
 }
 
-/* Dark filter overlay */
 .parallax::before {
     content: "";
     position: absolute;
@@ -41,7 +40,6 @@ html,
     z-index: 1;
 }
 
-/* Hero Text Content */
 .parallax-content {
     position: relative;
     z-index: 2;
@@ -49,7 +47,7 @@ html,
     padding: 0 5vw;
 }
 
-/* Fixed Navbar */
+/* Navbar */
 .navbar {
     position: fixed;
     top: 0;
@@ -75,6 +73,7 @@ html,
 .contact-section h2 {
     color: #ffffff;
     margin-bottom: 1rem;
+    text-align: center;
 }
 
 /* Service Cards */
@@ -83,19 +82,26 @@ html,
     color: #f1f1f1;
     border: none;
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+    scroll-snap-align: start;
+    flex: 0 0 auto;
+    transition: transform 0.3s ease;
+}
+
+.service-card:hover {
+    transform: scale(1.03);
 }
 
 .service-card p {
     color: #f1f1f1;
-    /* ensures <Text> inside renders white */
 }
 
-/* Optional: remove white gaps between Amplify Dividers */
+/* Divider */
 .amplify-divider {
     background-color: #222;
     height: 1px;
 }
 
+/* Horizontal Scroll */
 .services-scroll-container {
     display: flex;
     flex-direction: row;
@@ -106,20 +112,14 @@ html,
     -webkit-overflow-scrolling: touch;
     width: 100%;
     cursor: grab;
-    padding-left: 1rem;
-    padding-right: 1rem;
-  }
+    scroll-behavior: smooth;
+}
 
-  .services-scroll-container {
-    -ms-overflow-style: none; /* IE/Edge */
-    scrollbar-width: none; /* Firefox */
-  }
-  
-  .services-scroll-container::-webkit-scrollbar {
+.services-scroll-container::-webkit-scrollbar {
     display: none;
-  }
-  
-  .service-card {
-    scroll-snap-align: start;
-    flex: 0 0 auto;
-  }  
+}
+
+.services-scroll-container {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}

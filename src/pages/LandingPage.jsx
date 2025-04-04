@@ -10,10 +10,40 @@ import {
 import PropTypes from "prop-types";
 import "@aws-amplify/ui-react/styles.css";
 import "./LandingPage.css";
+import React, { useEffect, useRef, useState } from "react";
 
 export default function LandingPage() {
+    const scrollRef = useRef(null);
+    const [paused, setPaused] = useState(false);
+
+    useEffect(() => {
+        const container = scrollRef.current;
+        if (!container) return;
+
+        let animationFrameId;
+        let lastTime = performance.now();
+        const speed = 0.2; // pixels per ms
+
+        const scroll = (time) => {
+            const delta = time - lastTime;
+            lastTime = time;
+
+            if (!paused) {
+                container.scrollLeft += delta * speed;
+                if (Math.ceil(container.scrollLeft) >= container.scrollWidth - container.clientWidth - 1) {
+                    container.scrollLeft = 0;
+                }
+            }
+
+            animationFrameId = requestAnimationFrame(scroll);
+        };
+
+        animationFrameId = requestAnimationFrame(scroll);
+        return () => cancelAnimationFrame(animationFrameId);
+    }, [paused]);
+
     return (
-        <Flex direction="column" className="landing-page">
+        <Flex direction="column">
             {/* Navbar */}
             <View className="navbar">
                 <Flex
@@ -70,47 +100,18 @@ export default function LandingPage() {
                     Our Services
                 </Heading>
 
-                <div className="services-scroll-container">
-                    <ServiceCard
-                        title="Investigations"
-                        description="Investigative services to commercial clients, sporting organisations, legal firms, insurance, private and government organisations."
-                    />
-                    <ServiceCard
-                        title="Integrity Reviews"
-                        description="Review your integrity systems and processes with tailored solutions."
-                    />
-                    <ServiceCard
-                        title="Sports Integrity"
-                        description="Immediate and careful response to sensitive matters of integrity in sports."
-                    />
-                    <ServiceCard
-                        title="Background Checks"
-                        description="Thorough screening for employment, business partnerships, and more."
-                    />
-                    <ServiceCard
-                        title="Digital Forensics"
-                        description="Uncover digital evidence with expert analysis and court-ready reporting."
-                    />
-                    <ServiceCard
-                        title="Surveillance"
-                        description="Discreet and reliable monitoring services for individuals and organizations."
-                    />
-                    <ServiceCard
-                        title="Insurance Fraud"
-                        description="Detect and document fraudulent insurance claims with precision."
-                    />
-                    <ServiceCard
-                        title="Missing Persons"
-                        description="We specialize in tracing and locating missing people with compassion."
-                    />
-                    <ServiceCard
-                        title="Case Review"
-                        description="Detailed evaluation of previous investigations and reports."
-                    />
-                    <ServiceCard
-                        title="Corporate Espionage"
-                        description="Identify and respond to threats of insider information leaks."
-                    />
+                <div
+                    className="services-scroll-container"
+                    ref={scrollRef}
+                >
+                    {services.map((service, index) => (
+                        <ServiceCard
+                            key={index}
+                            title={service.title}
+                            description={service.description}
+                            setPaused={setPaused}
+                        />
+                    ))}
                 </div>
             </div>
 
@@ -134,7 +135,20 @@ export default function LandingPage() {
     );
 }
 
-function ServiceCard({ title, description }) {
+const services = [
+    { title: "Investigations", description: "Investigative services to commercial clients, sporting organisations, legal firms, insurance, private and government organisations." },
+    { title: "Integrity Reviews", description: "Review your integrity systems and processes with tailored solutions." },
+    { title: "Sports Integrity", description: "Immediate and careful response to sensitive matters of integrity in sports." },
+    { title: "Background Checks", description: "Thorough screening for employment, business partnerships, and more." },
+    { title: "Digital Forensics", description: "Uncover digital evidence with expert analysis and court-ready reporting." },
+    { title: "Surveillance", description: "Discreet and reliable monitoring services for individuals and organizations." },
+    { title: "Insurance Fraud", description: "Detect and document fraudulent insurance claims with precision." },
+    { title: "Missing Persons", description: "We specialize in tracing and locating missing people with compassion." },
+    { title: "Case Review", description: "Detailed evaluation of previous investigations and reports." },
+    { title: "Corporate Espionage", description: "Identify and respond to threats of insider information leaks." },
+];
+
+function ServiceCard({ title, description, setPaused }) {
     return (
         <View
             className="service-card"
@@ -142,6 +156,8 @@ function ServiceCard({ title, description }) {
             padding="2rem"
             textAlign="center"
             width="280px"
+            onMouseEnter={() => setPaused(true)}
+            onMouseLeave={() => setPaused(false)}
         >
             <Heading level={3} marginBottom="1rem" color="white">
                 {title}
@@ -156,4 +172,5 @@ function ServiceCard({ title, description }) {
 ServiceCard.propTypes = {
     title: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
+    setPaused: PropTypes.func.isRequired,
 };
