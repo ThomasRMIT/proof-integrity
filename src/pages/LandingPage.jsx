@@ -9,23 +9,13 @@ import {
 } from "@aws-amplify/ui-react";
 import PropTypes from "prop-types";
 import "@aws-amplify/ui-react/styles.css";
-import './LandingPage.css';
+import "./LandingPage.css";
 
 export default function LandingPage() {
     return (
         <Flex direction="column" className="landing-page">
-            {/* Fixed Navbar */}
-            <View
-                as="nav"
-                backgroundColor="#000"
-                padding="1rem 2rem"
-                borderBottom="1px solid #333"
-                position="fixed"
-                top="0"
-                left="0"
-                right="0"
-                zIndex="9999"
-            >
+            {/* Navbar */}
+            <View className="navbar">
                 <Flex
                     alignItems="center"
                     justifyContent="space-between"
@@ -40,12 +30,7 @@ export default function LandingPage() {
                         style={{ height: "3.5em" }}
                     />
 
-                    <Flex
-                        gap="1.5rem"
-                        alignItems="center"
-                        justifyContent="center"
-                        flex="1"
-                    >
+                    <Flex gap="1.5rem" alignItems="center" justifyContent="center" flex="1">
                         <Button variation="link" colorTheme="white">Services</Button>
                         <Button variation="link" colorTheme="white">About</Button>
                         <Button variation="link" colorTheme="white">Resources</Button>
@@ -60,57 +45,88 @@ export default function LandingPage() {
                 </Flex>
             </View>
 
+            {/* Hero Section */}
             <div className="parallax">
                 <div className="parallax-content">
-                    <Heading level={1} color="white">Investigations and Security Solutions</Heading>
-                    <Text fontSize="1.2rem" marginTop="0.75rem">
-                        We are a premier private investigation company offering discreet, professional,
-                        and reliable services. Whether you need surveillance, background checks, or
-                        fraud investigation, Proof Integrity Solutions delivers results you can trust.
+                    <Heading level={1} color="white" marginBottom="1rem" fontWeight="500">
+                        Investigations and Security Solutions
+                    </Heading>
+                    <Text fontSize="1.15rem" lineHeight="1.7" color="white">
+                        We are a premier private investigation company offering discreet,
+                        professional, and reliable services. Whether you need surveillance,
+                        background checks, or fraud investigation, Proof Integrity Solutions
+                        delivers results you can trust.
                     </Text>
-                    <Button variation="primary" marginTop="1.5rem">
+                    <Button variation="primary" marginTop="2rem">
                         Explore Services
                     </Button>
                 </div>
             </div>
 
-            {/* Rest of the page */}
+            {/* Services Section */}
+            <div className="services-section">
+                <Divider />
+                <Heading level={2} style={{ textAlign: "center", marginTop: "1.5rem" }}>
+                    Our Services
+                </Heading>
+
+                <div className="services-scroll-container">
+                    <ServiceCard
+                        title="Investigations"
+                        description="Investigative services to commercial clients, sporting organisations, legal firms, insurance, private and government organisations."
+                    />
+                    <ServiceCard
+                        title="Integrity Reviews"
+                        description="Review your integrity systems and processes with tailored solutions."
+                    />
+                    <ServiceCard
+                        title="Sports Integrity"
+                        description="Immediate and careful response to sensitive matters of integrity in sports."
+                    />
+                    <ServiceCard
+                        title="Background Checks"
+                        description="Thorough screening for employment, business partnerships, and more."
+                    />
+                    <ServiceCard
+                        title="Digital Forensics"
+                        description="Uncover digital evidence with expert analysis and court-ready reporting."
+                    />
+                    <ServiceCard
+                        title="Surveillance"
+                        description="Discreet and reliable monitoring services for individuals and organizations."
+                    />
+                    <ServiceCard
+                        title="Insurance Fraud"
+                        description="Detect and document fraudulent insurance claims with precision."
+                    />
+                    <ServiceCard
+                        title="Missing Persons"
+                        description="We specialize in tracing and locating missing people with compassion."
+                    />
+                    <ServiceCard
+                        title="Case Review"
+                        description="Detailed evaluation of previous investigations and reports."
+                    />
+                    <ServiceCard
+                        title="Corporate Espionage"
+                        description="Identify and respond to threats of insider information leaks."
+                    />
+                </div>
+            </div>
+
+            {/* Contact Section */}
             <Flex
                 direction="column"
                 alignItems="center"
                 justifyContent="center"
-                padding="2rem"
-                marginTop="2rem"
+                gap="1.25rem"
+                className="contact-section"
             >
-                <Divider margin="2rem 0" />
-                <Heading level={2}>Our Services</Heading>
-
-                <Flex
-                    wrap="wrap"
-                    gap="2rem"
-                    justifyContent="center"
-                    marginTop="2rem"
-                    maxWidth="900px"
-                >
-                    <ServiceCard
-                        title="Surveillance"
-                        description="Covert monitoring for personal, legal, or corporate cases."
-                    />
-                    <ServiceCard
-                        title="Background Checks"
-                        description="Thorough checks for employment, personal relationships, and legal matters."
-                    />
-                    <ServiceCard
-                        title="Fraud Investigation"
-                        description="Uncover insurance, corporate, or identity fraud with expert precision."
-                    />
-                </Flex>
-
-                <Divider margin="2rem 0" />
+                <Divider />
                 <Heading level={2}>Contact Us</Heading>
-                <Text>Email: contact@shadowhawkinvestigations.com</Text>
-                <Text>Phone: (555) 123-4567</Text>
-                <Button variation="primary" marginTop="2rem">
+                <Text color="#f1f1f1">Email: contact@contact.com</Text>
+                <Text color="#f1f1f1">Phone: (555) 123-4567</Text>
+                <Button variation="primary" marginTop="1.5rem">
                     Request a Free Consultation
                 </Button>
             </Flex>
@@ -121,16 +137,18 @@ export default function LandingPage() {
 function ServiceCard({ title, description }) {
     return (
         <View
-            border="1px solid #ccc"
-            borderRadius="10px"
+            className="service-card"
+            borderRadius="12px"
             padding="2rem"
             textAlign="center"
-            width="250px"
+            width="280px"
         >
-            <Heading level={3} marginBottom="1rem">
+            <Heading level={3} marginBottom="1rem" color="white">
                 {title}
             </Heading>
-            <Text>{description}</Text>
+            <Text fontSize="0.95rem" lineHeight="1.5" color="white">
+                {description}
+            </Text>
         </View>
     );
 }
