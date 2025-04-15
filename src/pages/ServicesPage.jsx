@@ -1,3 +1,4 @@
+// src/pages/ServicesPage.jsx
 import {
     Heading,
     Text,
@@ -7,45 +8,15 @@ import {
     Button,
     Divider,
 } from "@aws-amplify/ui-react";
-import PropTypes from "prop-types";
 import "@aws-amplify/ui-react/styles.css";
 import "./LandingPage.css";
-import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
 
-export default function LandingPage() {
-    const scrollRef = useRef(null);
-    const [paused, setPaused] = useState(false);
-
-    useEffect(() => {
-        const container = scrollRef.current;
-        if (!container) return;
-
-        let animationFrameId;
-        let lastTime = performance.now();
-        const speed = 0.2; // pixels per ms
-
-        const scroll = (time) => {
-            const delta = time - lastTime;
-            lastTime = time;
-
-            if (!paused) {
-                container.scrollLeft += delta * speed;
-                if (Math.ceil(container.scrollLeft) >= container.scrollWidth - container.clientWidth - 1) {
-                    container.scrollLeft = 0;
-                }
-            }
-
-            animationFrameId = requestAnimationFrame(scroll);
-        };
-
-        animationFrameId = requestAnimationFrame(scroll);
-        return () => cancelAnimationFrame(animationFrameId);
-    }, [paused]);
-
+export default function ServicesPage() {
     return (
-        <Flex direction="column">
-            {/* Navbar */}
+        <Flex direction="column" className="services-page" style={{ backgroundColor: "#000", color: "#f1f1f1" }}>
+            {/* Navbar (same as LandingPage) */}
             <View className="navbar">
                 <Flex
                     alignItems="center"
@@ -55,11 +26,14 @@ export default function LandingPage() {
                     width="100%"
                     flexWrap="wrap"
                 >
-                    <Image
-                        src="/proof-logo.png"
-                        alt="Proof Integrity Solutions Logo"
-                        style={{ height: "3.5em" }}
-                    />
+                    <Link to="/">
+                        <Image
+                            src="/proof-logo.png"
+                            alt="Proof Integrity Solutions Logo"
+                            style={{ height: "3.5em", cursor: "pointer" }}
+                        />
+                    </Link>
+
 
                     <Flex gap="1.5rem" alignItems="center" justifyContent="center" flex="1">
                         <Link to="/services">
@@ -80,47 +54,60 @@ export default function LandingPage() {
                 </Flex>
             </View>
 
-            {/* Hero Section */}
-            <div className="parallax">
-                <div className="parallax-content">
-                    <Heading level={1} color="#047d95" marginBottom="1rem" fontWeight="600">
-                        Investigations and Security Solutions
-                    </Heading>
-                    <Text fontSize="1.15rem" lineHeight="1.7" color="white">
-                        We are a premier private investigation company offering discreet,
-                        professional, and reliable services. Whether you need surveillance,
-                        background checks, or fraud investigation, Proof Integrity Solutions
-                        delivers results you can trust.
-                    </Text>
-                    <Button variation="primary" marginTop="2rem">
-                        Explore Services
-                    </Button>
-                </div>
-            </div>
-
-            {/* Services Section */}
-            <div className="services-section">
-                <Divider />
-                <Heading level={2} style={{ textAlign: "center", marginTop: "1.5rem" }}>
-                    Our Services
-                </Heading>
-
+            {/* Page Heading */}
+            <div
+                style={{
+                    backgroundImage: "url('/services.png')",
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                    backgroundRepeat: "no-repeat",
+                    padding: "8rem 2rem 6rem 2rem",
+                    textAlign: "center",
+                    position: "relative",
+                    marginTop: "4rem"
+                }}
+            >
+                {/* Optional dark overlay for readability */}
                 <div
-                    className="services-scroll-container"
-                    ref={scrollRef}
-                >
-                    {services.map((service, index) => (
-                        <ServiceCard
-                            key={index}
-                            title={service.title}
-                            description={service.description}
-                            setPaused={setPaused}
-                        />
-                    ))}
-                </div>
+                    style={{
+                        position: "absolute",
+                        top: 0,
+                        left: 0,
+                        right: 0,
+                        bottom: 0,
+                        backgroundColor: "rgba(0, 0, 0, 0.6)",
+                        zIndex: 1
+                    }}
+                />
+                <Flex direction="column" alignItems="center" style={{ position: "relative", zIndex: 2 }}>
+                    <Heading level={1} color="#ffffff" marginBottom="1rem">Our Services</Heading>
+                    <Text
+                        textAlign="center"
+                        maxWidth="700px"
+                        fontSize="1.1rem"
+                        color="#f1f1f1"
+                    >
+                        From surveillance and background checks to corporate fraud investigations,
+                        we offer a full range of discreet and professional investigative services.
+                    </Text>
+                </Flex>
             </div>
 
-            {/* Contact Section */}
+
+            <Divider />
+
+            {/* Services Grid */}
+            <Flex
+                wrap="wrap"
+                justifyContent="center"
+                gap="2rem"
+                padding="3rem 2rem"
+                className="services-grid"
+            >
+                {services.map((service, index) => (
+                    <ServiceCard key={index} title={service.title} description={service.description} />
+                ))}
+            </Flex>
             <Flex
                 direction="column"
                 alignItems="center"
@@ -137,6 +124,7 @@ export default function LandingPage() {
                 </Button>
             </Flex>
         </Flex>
+
     );
 }
 
@@ -153,7 +141,7 @@ const services = [
     { title: "Corporate Espionage", description: "Identify and respond to threats of insider information leaks." },
 ];
 
-function ServiceCard({ title, description, setPaused }) {
+function ServiceCard({ title, description }) {
     return (
         <View
             className="service-card"
@@ -161,8 +149,6 @@ function ServiceCard({ title, description, setPaused }) {
             padding="2rem"
             textAlign="center"
             width="280px"
-            onMouseEnter={() => setPaused(true)}
-            onMouseLeave={() => setPaused(false)}
         >
             <Heading level={3} marginBottom="1rem" color="white">
                 {title}
@@ -177,5 +163,4 @@ function ServiceCard({ title, description, setPaused }) {
 ServiceCard.propTypes = {
     title: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
-    setPaused: PropTypes.func.isRequired,
 };
