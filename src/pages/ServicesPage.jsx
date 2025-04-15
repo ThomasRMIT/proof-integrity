@@ -12,6 +12,7 @@ import "@aws-amplify/ui-react/styles.css";
 import "./LandingPage.css";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
+import services from "../data/services";
 
 export default function ServicesPage() {
     return (
@@ -97,6 +98,7 @@ export default function ServicesPage() {
             <Divider />
 
             {/* Services Grid */}
+            {/* Services Grid */}
             <Flex
                 wrap="wrap"
                 justifyContent="center"
@@ -105,9 +107,19 @@ export default function ServicesPage() {
                 className="services-grid"
             >
                 {services.map((service, index) => (
-                    <ServiceCard key={index} title={service.title} description={service.description} />
+                    <Link
+                        key={index}
+                        to={`/services/${service.slug}`}
+                        style={{ textDecoration: "none", color: "inherit" }}
+                    >
+                        <ServiceCard
+                            title={service.title}
+                            description={service.description}
+                        />
+                    </Link>
                 ))}
             </Flex>
+
             <Flex
                 direction="column"
                 alignItems="center"
@@ -128,18 +140,14 @@ export default function ServicesPage() {
     );
 }
 
-const services = [
-    { title: "Investigations", description: "Investigative services to commercial clients, sporting organisations, legal firms, insurance, private and government organisations." },
-    { title: "Integrity Reviews", description: "Review your integrity systems and processes with tailored solutions." },
-    { title: "Sports Integrity", description: "Immediate and careful response to sensitive matters of integrity in sports." },
-    { title: "Background Checks", description: "Thorough screening for employment, business partnerships, and more." },
-    { title: "Digital Forensics", description: "Uncover digital evidence with expert analysis and court-ready reporting." },
-    { title: "Surveillance", description: "Discreet and reliable monitoring services for individuals and organizations." },
-    { title: "Insurance Fraud", description: "Detect and document fraudulent insurance claims with precision." },
-    { title: "Missing Persons", description: "We specialize in tracing and locating missing people with compassion." },
-    { title: "Case Review", description: "Detailed evaluation of previous investigations and reports." },
-    { title: "Corporate Espionage", description: "Identify and respond to threats of insider information leaks." },
-];
+{
+    services.map((service, index) => (
+        <Link key={index} to={`/services/${service.slug}`} style={{ textDecoration: "none" }}>
+            <ServiceCard title={service.title} description={service.description} />
+        </Link>
+    ))
+}
+
 
 function ServiceCard({ title, description }) {
     return (
@@ -149,6 +157,13 @@ function ServiceCard({ title, description }) {
             padding="2rem"
             textAlign="center"
             width="280px"
+            style={{
+                backgroundColor: "#111",
+                cursor: "pointer",
+                transition: "transform 0.2s ease",
+            }}
+            onMouseEnter={(e) => (e.currentTarget.style.transform = "scale(1.03)")}
+            onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")}
         >
             <Heading level={3} marginBottom="1rem" color="white">
                 {title}
@@ -159,6 +174,7 @@ function ServiceCard({ title, description }) {
         </View>
     );
 }
+
 
 ServiceCard.propTypes = {
     title: PropTypes.string.isRequired,

@@ -3,6 +3,7 @@ import LandingPage from "./pages/LandingPage";
 import AdminSignIn from "./pages/AdminSignIn";
 import ServicesPage from "./pages/ServicesPage";
 import AboutPage from "./pages/AboutPage";
+import ServiceDetailPage from "./pages/ServiceDetailPage";
 
 export default function App() {
   return (
@@ -12,6 +13,7 @@ export default function App() {
         <Route path="/admin" element={<AdminSignIn />} />
         <Route path="/services" element={<ServicesPage />} />
         <Route path="/about" element={<AboutPage />} /> 
+        <Route path="/services/:slug" element={<ServiceDetailPage />} />
       </Routes>
     </Router>
   );
