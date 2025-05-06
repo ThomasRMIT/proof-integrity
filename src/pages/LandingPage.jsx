@@ -107,7 +107,7 @@ export default function LandingPage() {
                     </Flex>
                 </Flex>
             </View>
-
+<Flex direction="column" className="page-content">
             {/* Hero Section */}
             <div className="parallax">
                 <div className="parallax-content">
@@ -226,6 +226,7 @@ export default function LandingPage() {
                     <Text>ABN: 12 345 678 910 | Email: contact@contact.com | Phone: (555) 123-4567</Text>
                 </Flex>
             </View>
+        </Flex>
         </Flex>
     );
 }

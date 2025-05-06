@@ -198,6 +198,22 @@ html,
     text-align: center;
 }
 
+body {
+    padding-top: 80px; /* adjust based on actual navbar height */
+}
+
+@media (max-width: 768px) {
+    .page-content {
+        margin-top: 120px;
+    }
+}
+
+@media (max-width: 768px) {
+    .contact-section > .amplify-flex {
+      flex-direction: column !important;
+    }
+  }  
+
 .contact-info-box {
     background: rgba(0, 0, 0, 0.5);
     border-radius: 16px;
@@ -235,4 +251,82 @@ html,
     width: 100%;
     border-radius: 16px;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+/* ========== MOBILE STYLES (max-width: 768px) ========== */
+@media (max-width: 768px) {
+    /* Navbar adjustments */
+    .navbar {
+        padding: 1rem;
+    }
+
+    .navbar > div {
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    /* Hero section content */
+    .parallax {
+        padding-top: 6rem;
+        padding-bottom: 2rem;
+        background-attachment: scroll; /* fallback for mobile */
+    }
+
+    body {
+        padding-top: 120px;
+    }
+
+    .parallax-content {
+        margin-left: 0;
+        padding: 1.5rem;
+        text-align: center;
+    }
+
+    /* Services scroll container */
+    .services-scroll-container {
+        gap: 1rem;
+        padding: 1rem;
+    }
+
+    .service-card {
+        width: 85vw;
+    }
+
+    /* Secondary parallax section */
+    .secondary-parallax {
+        padding-top: 3rem;
+        padding-bottom: 2rem;
+    }
+
+    .full-width-content-box {
+        padding: 1.5rem;
+    }
+
+    /* Contact section */
+    .contact-section {
+        padding: 2rem 1rem;
+    }
+
+    .contact-section > div {
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+    .contact-info-box {
+        padding: 1.5rem;
+    }
+
+    .map-wrapper {
+        padding: 1rem 0;
+    }
+
+    /* Footer */
+    .footer {
+        padding: 1.5rem 1rem;
+    }
+
+    .footer p, .footer span {
+        font-size: 0.9rem;
+    }
 }
