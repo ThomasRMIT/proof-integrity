@@ -43,6 +43,34 @@ export default function LandingPage() {
         return () => cancelAnimationFrame(animationFrameId);
     }, [paused]);
 
+    useEffect(() => {
+        const initMap = async () => {
+            // Only run if google maps has loaded
+            if (!window.google || !window.google.maps) return;
+
+            const position = { lat: -37.8136, lng: 144.9730 }; // 1 Treasury Way, Melbourne
+
+            const { Map } = await window.google.maps.importLibrary("maps");
+            const { AdvancedMarkerElement } = await window.google.maps.importLibrary("marker");
+
+            const map = new Map(document.getElementById("map"), {
+                center: position,
+                zoom: 16,
+                mapId: "DEMO_MAP_ID",
+            });
+
+            new AdvancedMarkerElement({
+                map,
+                position,
+                title: "1 Treasury Way, Melbourne",
+            });
+        };
+
+        if (window.google && window.google.maps && window.google.maps.importLibrary) {
+            initMap();
+        }
+    }, []);
+
     return (
         <Flex direction="column">
             {/* Navbar */}
@@ -120,22 +148,84 @@ export default function LandingPage() {
                 </div>
             </div>
 
+            {/* Secondary Parallax Section */}
+            <div
+                className="parallax secondary-parallax"
+                style={{ backgroundImage: `url("/business-office-photographer-brochure-0084.jpg")` }}
+            >
+                <div className="parallax-content full-width-content-box">
+                    <Heading level={2} color="#047d95" fontWeight="600">
+                        Trusted Corporate Solutions
+                    </Heading>
+                    <Text fontSize="1.1rem" lineHeight="1.6" color="white" marginTop="0.5rem">
+                        From internal reviews to high-profile investigations, our team ensures thorough, discreet service every time.
+                    </Text>
+                </div>
+            </div>
+
             {/* Contact Section */}
             <Flex
                 direction="column"
                 alignItems="center"
                 justifyContent="center"
-                gap="1.25rem"
+                gap="2rem"
                 className="contact-section"
             >
                 <Divider />
                 <Heading level={2}>Contact Us</Heading>
-                <Text color="#f1f1f1">Email: contact@contact.com</Text>
-                <Text color="#f1f1f1">Phone: (555) 123-4567</Text>
-                <Button variation="primary" marginTop="1.5rem">
-                    Request a Free Consultation
-                </Button>
+
+                <Flex
+                    direction="row"
+                    width="100%"
+                    maxWidth="1000px"
+                    gap="3rem"
+                    justifyContent="space-between"
+                    flexWrap="wrap"
+                >
+                    {/* Company Info - Left Side */}
+                    <View className="contact-info-box">
+                        <Flex direction="column" gap="1rem">
+                            <Text fontSize="1.1rem" fontWeight="600" color="#ffffff">Get in Touch</Text>
+                            <Text color="#f1f1f1">📞 Phone: (555) 123-4567</Text>
+                            <Text color="#f1f1f1">✉️ Email: contact@contact.com</Text>
+                            <Text color="#f1f1f1">🏢 Address: 123 Investigator Ave, Melbourne, VIC</Text>
+                            <Text color="#f1f1f1">🕒 Mon–Fri: 9:00AM – 5:00PM</Text>
+                        </Flex>
+
+                        {/* Move map here */}
+                        <View className="map-wrapper" style={{ marginTop: "2rem" }}>
+                            <div id="map" className="google-map" />
+                        </View>
+                    </View>
+
+                    {/* Contact Form - Right Side */}
+                    <View as="form" flex="1" minWidth="300px">
+                        <Flex direction="column" gap="1rem">
+                            <input type="text" placeholder="Full Name" className="contact-input" />
+                            <input type="text" placeholder="Phone Number" className="contact-input" />
+                            <input type="email" placeholder="Email Address" className="contact-input" />
+                            <input type="text" placeholder="Organisation" className="contact-input" />
+                            <textarea rows="5" placeholder="Your Enquiry..." className="contact-input" />
+                            <Button variation="primary" width="fit-content" alignSelf="flex-end">Submit</Button>
+                        </Flex>
+                    </View>
+                </Flex>
             </Flex>
+
+            {/* Footer */}
+            <View as="footer" className="footer">
+                <Flex
+                    direction="column"
+                    alignItems="center"
+                    justifyContent="center"
+                    padding="2rem"
+                    color="#aaa"
+                    textAlign="center"
+                >
+                    <Text>&copy; {new Date().getFullYear()} Proof Integrity Solutions. All rights reserved.</Text>
+                    <Text>ABN: 12 345 678 910 | Email: contact@contact.com | Phone: (555) 123-4567</Text>
+                </Flex>
+            </View>
         </Flex>
     );
 }

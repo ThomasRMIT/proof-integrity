@@ -4,6 +4,7 @@ import AdminSignIn from "./pages/AdminSignIn";
 import ServicesPage from "./pages/ServicesPage";
 import AboutPage from "./pages/AboutPage";
 import ServiceDetailPage from "./pages/ServiceDetailPage";
+import ContactPage from "./pages/ContactPage";
 
 export default function App() {
   return (
@@ -14,6 +15,7 @@ export default function App() {
         <Route path="/services" element={<ServicesPage />} />
         <Route path="/about" element={<AboutPage />} /> 
         <Route path="/services/:slug" element={<ServiceDetailPage />} />
+        <Route path="/contact" element={<ContactPage />} />
       </Routes>
     </Router>
   );

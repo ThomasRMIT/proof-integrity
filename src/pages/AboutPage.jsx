@@ -27,11 +27,11 @@ export default function AboutPage() {
                     flexWrap="wrap"
                 >
                     <Link to="/">
-                    <Image
-                        src="/proof-logo.png"
-                        alt="Proof Integrity Solutions Logo"
-                        style={{ height: "3.5em" }}
-                    />
+                        <Image
+                            src="/proof-logo.png"
+                            alt="Proof Integrity Solutions Logo"
+                            style={{ height: "3.5em" }}
+                        />
                     </Link>
 
                     <Flex gap="1.5rem" alignItems="center" justifyContent="center" flex="1">
@@ -48,7 +48,9 @@ export default function AboutPage() {
                         <Text fontSize="0.9rem" color="white" whiteSpace="nowrap">
                             📞 (555) 123-4567
                         </Text>
-                        <Button variation="primary">Contact Us</Button>
+                        <Link to="/contact">
+                            <Button variation="primary">Contact Us</Button>
+                        </Link>
                     </Flex>
                 </Flex>
             </View>

@@ -50,7 +50,9 @@ export default function ServicesPage() {
                         <Text fontSize="0.9rem" color="white" whiteSpace="nowrap">
                             📞 (555) 123-4567
                         </Text>
-                        <Button variation="primary">Contact Us</Button>
+                        <Link to="/contact">
+                            <Button variation="primary">Contact Us</Button>
+                        </Link>
                     </Flex>
                 </Flex>
             </View>
