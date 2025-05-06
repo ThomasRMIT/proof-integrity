@@ -13,8 +13,38 @@ import "./LandingPage.css";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import services from "../data/services";
+import { useEffect } from "react";
 
 export default function ServicesPage() {
+
+    useEffect(() => {
+        const initMap = async () => {
+            if (!window.google || !window.google.maps) return;
+
+            const position = { lat: -37.8136, lng: 144.9730 }; // 1 Treasury Way
+
+            const { Map } = await window.google.maps.importLibrary("maps");
+            const { AdvancedMarkerElement } = await window.google.maps.importLibrary("marker");
+
+            const map = new Map(document.getElementById("services-map"), {
+                center: position,
+                zoom: 16,
+                mapId: "DEMO_MAP_ID",
+            });
+
+            new AdvancedMarkerElement({
+                map,
+                position,
+                title: "1 Treasury Way, Melbourne",
+            });
+        };
+
+        if (window.google && window.google.maps && window.google.maps.importLibrary) {
+            initMap();
+        }
+    }, []);
+
+
     return (
         <Flex direction="column" className="services-page" style={{ backgroundColor: "#000", color: "#f1f1f1" }}>
             {/* Navbar (same as LandingPage) */}
@@ -100,7 +130,6 @@ export default function ServicesPage() {
             <Divider />
 
             {/* Services Grid */}
-            {/* Services Grid */}
             <Flex
                 wrap="wrap"
                 justifyContent="center"
@@ -122,21 +151,69 @@ export default function ServicesPage() {
                 ))}
             </Flex>
 
+            {/* Full Contact Section */}
             <Flex
                 direction="column"
                 alignItems="center"
                 justifyContent="center"
-                gap="1.25rem"
+                gap="2rem"
                 className="contact-section"
             >
                 <Divider />
                 <Heading level={2}>Contact Us</Heading>
-                <Text color="#f1f1f1">Email: contact@contact.com</Text>
-                <Text color="#f1f1f1">Phone: (555) 123-4567</Text>
-                <Button variation="primary" marginTop="1.5rem">
-                    Request a Free Consultation
-                </Button>
+
+                <Flex
+                    direction="row"
+                    width="100%"
+                    maxWidth="1000px"
+                    gap="3rem"
+                    justifyContent="space-between"
+                    flexWrap="wrap"
+                >
+                    {/* Contact Info Box with Map underneath */}
+                    <View className="contact-info-box">
+                        <Flex direction="column" gap="1rem">
+                            <Text fontSize="1.1rem" fontWeight="600" color="#ffffff">Get in Touch</Text>
+                            <Text color="#f1f1f1">📞 Phone: (555) 123-4567</Text>
+                            <Text color="#f1f1f1">✉️ Email: contact@contact.com</Text>
+                            <Text color="#f1f1f1">🏢 Address: 123 Investigator Ave, Melbourne, VIC</Text>
+                            <Text color="#f1f1f1">🕒 Mon–Fri: 9:00AM – 5:00PM</Text>
+                        </Flex>
+
+                        {/* Google Map embedded underneath info */}
+                        <View className="map-wrapper" style={{ marginTop: "2rem" }}>
+                            <div id="services-map" className="google-map"></div>
+                        </View>
+                    </View>
+
+
+                    {/* Contact Form */}
+                    <View as="form" flex="1" minWidth="300px">
+                        <Flex direction="column" gap="1rem">
+                            <input type="text" placeholder="Full Name" className="contact-input" />
+                            <input type="text" placeholder="Phone Number" className="contact-input" />
+                            <input type="email" placeholder="Email Address" className="contact-input" />
+                            <input type="text" placeholder="Organisation" className="contact-input" />
+                            <textarea rows="5" placeholder="Your Enquiry..." className="contact-input" />
+                            <Button variation="primary" width="fit-content" alignSelf="flex-end">Submit</Button>
+                        </Flex>
+                    </View>
+                </Flex>
             </Flex>
+            {/* Footer */}
+            <View as="footer" className="footer">
+                <Flex
+                    direction="column"
+                    alignItems="center"
+                    justifyContent="center"
+                    padding="2rem"
+                    color="#aaa"
+                    textAlign="center"
+                >
+                    <Text>&copy; {new Date().getFullYear()} Proof Integrity Solutions. All rights reserved.</Text>
+                    <Text>ABN: 12 345 678 910 | Email: contact@contact.com | Phone: (555) 123-4567</Text>
+                </Flex>
+            </View>
         </Flex>
 
     );
